@@ -137,7 +137,7 @@ DCSG				normalのみ
 int getvv(byte *p)
 {
     int s = 0, n = 0;
-    p--
+    p--;
     do
     {
         n |= (*(++p) & 0x7f) << s;
