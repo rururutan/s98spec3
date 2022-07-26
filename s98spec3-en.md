@@ -8,7 +8,7 @@ S98 is a music format that stores instructions sent to OPNA/OPN chips.
 ### HEADER FORMAT
 
 ofs |size/endian| name | description 
-----|----|-------------|------------
+----|-----------|------|------------
 0000|3BYTE|MAGIC|`S98`
 0003|1BYTE|FORMAT VERSION|`3`
 0004|DWORD(LE)|TIMER INFO|sync numerator. If value is 0, default time is 10.
@@ -29,7 +29,7 @@ ofs |size/endian| name | description
 ### DEVICE INFO
 
 ofs |size/endian| name | description
-----|----|-------------|------------
+----|-----------|------|------------
 0000|DWORD(LE)|DEVICE TYPE|See below.<br>YM2149 means a non-AY-3-8910-compatible clock mode.
 0004|DWORD(LE)|CLOCK(Hz)|The external oscillator clock.
 0008|DWORD(LE)|PANNING|See below.
@@ -105,15 +105,15 @@ bit|meaning
 
  Refer to the following sample:
 
-`[S98]`
-"`title=Opening`" `0x0a`
-"`artist=Yuzo Koshiro`" `0x0a`
-"`game=Sorcerian`" `0x0a`
-"`year=1987`" `0x0a`
-"`genre=game`" `0x0a`
-"`comment=This is sample data.`" `0x0a`
-"`copyright=Nihon Falcom`" `0x0a`
-"`s98by=foo`" `0x0a`
+`[S98]`\
+"`title=Opening`" `0x0a`\
+"`artist=Yuzo Koshiro`" `0x0a`\
+"`game=Sorcerian`" `0x0a`\
+"`year=1987`" `0x0a`\
+"`genre=game`" `0x0a`\
+"`comment=This is sample data.`" `0x0a`\
+"`copyright=Nihon Falcom`" `0x0a`\
+"`s98by=foo`" `0x0a`\
 "`system=PC-8801`" `0x0a`
 
  The tag names may be anything you want, but the above tags are defined as basic tags.
@@ -130,13 +130,12 @@ FF       | 1SYNC
 FE `vv`  | nSYNC
 FD       | END/LOOP
 
- The elapsed time in `1SYNC` is the value of `TIMER INFO`/`TIMER INFO2`(sec) from the header.
+  - The elapsed time in `1SYNC` is the value of `TIMER INFO`/`TIMER INFO2`(sec) from the header.
+  - The `DEVICE1`, `DEVICE2` etc. correspond to the order defined in `DEVICE INFO`, with two commands provided per device: `normal` and `extend`.
 
- The `DEVICE1`, `DEVICE2` etc. correspond to the order defined in `DEVICE INFO`, with two commands provided per device: `normal` and `extend`.
+The difference in the usage of `normal`/`extend` is as follows:
 
- Difference in the usage of `normal`/`extend`:
-
-|device | usage
+|device|usage
 |-|-
 | PSG/OPN/OPM/OPLL/OPL/OPL2 | strictly `normal`
 | OPNA/OPN2/OPL3 | `normal`/`extend`
