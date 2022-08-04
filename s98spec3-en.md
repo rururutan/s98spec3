@@ -1,7 +1,7 @@
 # S98V3 file format
 
   - Japanese version 2006-05-15
-  - English version 2022-07-26
+  - English version 2022-08-05
 
 S98 is a music format that stores instructions sent to OPNA/OPN chips.
 
@@ -23,14 +23,14 @@ ofs |size/endian| name | description
   - The COMPRESSING flag introduced in V1 has remained unused so it was discarded.
   - DEVICE COUNT must be no larger than 64.
   - For values above 1, DEVICE INFO immediately follows starting at 0x20.
-  - For compatibility with S98V1, a DEVICE COUNT of 0 results in a single OPNA1 device.
+  - For compatibility with S98V1, a DEVICE COUNT of 0 results in a single OPNA device (device info is unnecessary).
 
 
 ### DEVICE INFO
 
 ofs |size/endian| name | description
 ----|-----------|------|------------
-0000|DWORD(LE)|DEVICE TYPE|See below.<br>YM2149 means a non-AY-3-8910-compatible clock mode.
+0000|DWORD(LE)|DEVICE TYPE|See below.<br>YM2149 works at two times the clock rate compared to AY-3-8910 (and so incompatible).
 0004|DWORD(LE)|CLOCK(Hz)|The external oscillator clock.
 0008|DWORD(LE)|PANNING|See below.
 000C-000F|RESERVED|
