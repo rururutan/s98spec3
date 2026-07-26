@@ -20,9 +20,9 @@ ofs |size/endian| name | description
 001C|DWORD(LE)|DEVICE COUNT|The default value is 0, meaning OPNA, the clock is 7987200Hz
 0020|DWORD(LE)|DEVICE INFO|× DEVICE COUNT
 
-  - The COMPRESSING flag introduced in V1 has remained unused so it was discarded.
+  - The COMPRESSING flag introduced in V1 has remained unused, so it was discarded.
   - DEVICE COUNT must be no larger than 64.
-  - For values above 1, DEVICE INFO immediately follows starting at 0x20.
+  - For values 1 and above, DEVICE INFO immediately follows, starting at 0x20.
   - For compatibility with S98V1, a DEVICE COUNT of 0 results in a single OPNA device (device info is unnecessary).
 
 
@@ -59,7 +59,7 @@ code|meaning
 ### PANNING
 
   - For mono devices only. (PSG/OPN/OPLL/OPL/OPL2/DCSG)
-  - Intended for the use where panning is implemented using two or more chips.
+  - Intended for the use case where panning is implemented using two or more chips.
   - The two bits represent L/R channels; mute when the bit is set.
 
 (PSG)
@@ -73,7 +73,7 @@ bit|meaning
 5|ch4 R
 
 (OPN)
-Same as PSG until bit 5.
+The same as PSG until bit 5.
 
 bit|meaning
 -|-
@@ -91,17 +91,17 @@ bit|meaning
 
  The structure mostly conforms to the PSF format tag:
  
-  * Attached at the end of file.
+  * Attached at the end of the file.
   * Tags are written as tagname=value.
   * Tag names can be half-width or full-width.
-  * The line breaks are 0x0a.
-  * Finishing the tag sequence with 0x00 is recommended.
+  * The line breaks are `0x0a`.
+  * Finishing the tag sequence with `0x00` is recommended.
 
  The parts that are different from PSF:
  
-  * The tag ID is "[S98]".
+  * The tag ID is "`[S98]`".
   * Character encoding may be either multibyte (Shift_JIS for Japanese locale) or UTF-8.
-  * If a BOM(EF BB BF) is present immediately after the tag ID, it will be UTF-8, multibyte otherwise.
+  * If a BOM (`EF BB BF`) is present immediately after the tag ID, it will be UTF-8, multibyte otherwise.
 
  Refer to the following sample:
 
@@ -118,17 +118,17 @@ bit|meaning
 
  The tag names may be anything you want, but the above tags are defined as basic tags.
 
-[DUMP DATA FORMAT]
+### DUMP DATA FORMAT
 raw data | meaning
 -|-
-00 aa dd | DEVICE1(normal)
-01 aa dd | DEVICE1(extend)
-02 aa dd | DEVICE2(normal)
-03 aa dd | DEVICE2(extend)
+`00` aa dd | DEVICE1(normal)
+`01` aa dd | DEVICE1(extend)
+`02` aa dd | DEVICE2(normal)
+`03` aa dd | DEVICE2(extend)
 ... |
-FF       | 1SYNC
-FE `vv`  | nSYNC
-FD       | END/LOOP
+`FF`       | 1SYNC
+`FE` vv    | nSYNC
+`FD`       | END/LOOP
 
   - The elapsed time in `1SYNC` is the value of `TIMER INFO`/`TIMER INFO2`(sec) from the header.
   - The `DEVICE1`, `DEVICE2` etc. correspond to the order defined in `DEVICE INFO`, with two commands provided per device: `normal` and `extend`.
@@ -142,7 +142,7 @@ The difference in the usage of `normal`/`extend` is as follows:
 | DCSG | strictly `normal`
 |    | Specified in register 0, and GG extension defines register 1.
 
- `vv` is specified by `FE` command, and is a variable-length little-endian value, with the 7th bit as the continuation flag.
+ "vv" specified in the `FE` command is a variable-length little-endian integer value, with the 7th bit as the continuation flag.
 
  Consider the following code.
 
@@ -162,7 +162,7 @@ The difference in the usage of `normal`/`extend` is as follows:
 
 ## CONTACTS
 
-For any improvement suggestions or considerations, please email me or use the 2ch boards I may be looking at.
+If you have any improvement suggestions or considerations, please email me or use the 2ch boards I may be looking at.
 
 
 ## HISTORY
@@ -179,7 +179,7 @@ For any improvement suggestions or considerations, please email me or use the 2c
   - DEVICE TYPE : Typo fixed (YM2610->YM2612)
 
 2005-10-08
-  - TAG   : Basic tag names explained.
+  - TAG : Basic tag names explained.
 
 2005-08-05
   - DEVICE: OPL2 and OPL3 defined
